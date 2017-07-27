@@ -1,0 +1,6 @@
+name: HyperStamina
+version: 1.0
+main: project.kg.STAMINA
+commands:
+   PP:
+      description: mainly Commands.

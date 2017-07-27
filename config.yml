@@ -1,0 +1,89 @@
+#██╗  ██╗██╗   ██╗██████╗ ███████╗██████╗     ███████╗████████╗ █████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ 
+#██║  ██║╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗    ██╔════╝╚══██╔══╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗
+#███████║ ╚████╔╝ ██████╔╝█████╗  ██████╔╝    ███████╗   ██║   ███████║██╔████╔██║██║██╔██╗ ██║███████║
+#██╔══██║  ╚██╔╝  ██╔═══╝ ██╔══╝  ██╔══██╗    ╚════██║   ██║   ██╔══██║██║╚██╔╝██║██║██║╚██╗██║██╔══██║
+#██║  ██║   ██║   ██║     ███████╗██║  ██║    ███████║   ██║   ██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║
+#╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚══════╝╚═╝  ╚═╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+# Source(源码): Github-https://github.com/PowerKG/HyperStamina
+# 制作者:KG  QQ:137391258
+# 可联系我进行插件、模组、系统等定制或修复！
+
+#若你想全面了解该插件工作方式和效果，请耐心读完所有设置。
+
+###################全局设置#######################
+##################################################
+#是否保存玩家数据
+SaveData: true
+#数据保存时间间隔(每1相当于1/20秒，20相当于1秒)
+DataSaveInterval: 400
+#Tick:更新时间(将会影响所有数据,请勿随意修改!),该更新时间在以下设置简称为 tick
+#注意：该设置将会影响服务器稳定与同体力值系统刷新速度！请勿设置为0，否则你服务器准备好GG。
+#每1相当于1/20秒，20相当于1秒。默认值5表示1/2秒更新一次.
+Tick: 1
+
+###################基础设置#######################
+##################################################
+
+#是否将PP值与经验条挂钩(！！后果是经验值系统将会失效！！)
+HookExpBar: true
+#重生是否恢满PP
+RespawnRefection: false
+#默认体力值上限
+DefaultMaxPP: 100.0
+#PP变动多少则会进行提示(设置为-1则不提示.)
+HintPP: 5.0
+
+
+###################数值设置#######################
+##################################################
+
+#每Tick回复的体力值。默认设置为每100秒恢复1PP。
+TickRefection:  0.0005
+#静止不动时才恢复
+RecoverWhenStill: false
+
+#每个行为的PP消耗
+ValueConsume:
+  #破坏方块
+  BreakBlock: 0.4
+  #放置方块
+  PlaceBlock: 0.2
+  #跑步消耗(每1格消耗)
+  Sprint: 0.005
+  #走路消耗(每1格消耗)
+  Walk: 0.002
+  #聊天
+  Chat: 0.2
+  #杀死生物(包括玩家)
+  Kill: 0.5
+  #使用指令
+  DoCmd: 0.0
+  #丢物品
+  DropItem: 0.1
+
+
+###################触发设置#######################
+##################################################
+#效果:http://minecraft-zh.gamepedia.com/%E7%8A%B6%E6%80%81%E6%95%88%E6%9E%9C。
+#可限制的行为:dropitem(丢物品)、cmd(使用指令)、chat(聊天)、sprint(冲刺)、breakblock(破坏方块)、placeblock(放置方块)
+#获得效果: (效果) (放大等级<游戏中等级-1>) 。例如: [slow 1] 使玩家行动缓慢
+#限制行为: :(限制效果) 。例如: [:sprint] 来限制冲刺
+
+#虚弱阀值。当玩家PP值低于该阀值则触发虚弱效果。
+WeakThreshold: 1.0
+#虚弱效果。当PP值低于以上阀值时并且未达到精疲力尽阶段时触发的效果。
+WeakBuff: 
+  - weakness 1
+  - slow 2
+  - slow_digging 1
+
+#精疲力尽阀值。当玩家PP值低于该阀值则触发效果。
+ExhaustedThreshold: 0.5
+#精疲力尽后的buff
+ExhaustedBuff:
+  - :sprint
+  - weakness 3
+  - slow 3
+  - poison 0
+  - slow_digging 10
+
