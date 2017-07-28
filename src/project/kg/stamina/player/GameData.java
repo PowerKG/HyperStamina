@@ -224,7 +224,7 @@ public class GameData
 		if (cfg.Hint)
 			if (Math.abs(changePP) >= cfg.HintPP)
 			{
-				thePlayer.sendMessage("§2你的体力值(PP)" + (changePP >= 0 ? "增加" : "减少") + "了§6 " + df.format(Math.abs(changePP)) + " §c§l(" + df.format(pp) + "§f/§c§l" + df.format(maxPP) + ")");
+				thePlayer.sendMessage("§2你的体力值(PP)一共" + (changePP >= 0 ? "增加" : "减少") + "了§6 " + df.format(Math.abs(changePP)) + " §c§l(" + df.format(pp) + "§f/§c§l" + df.format(maxPP) + ")");
 				changePP = 0;
 			}
 	}
