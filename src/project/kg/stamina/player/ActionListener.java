@@ -1,6 +1,12 @@
 package project.kg.stamina.player;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +25,11 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+
+import com.google.common.collect.Sets;
 
 import project.kg.stamina.CONFIG;
 import project.kg.stamina.player.behavior.BehaviorType;
@@ -74,7 +85,6 @@ public class ActionListener implements Listener
 			GameData data = GameData.Handler.find(event.getPlayer());
 			if (data == null)
 				return;
-
 			data.setPP(data.maxPP);
 		}
 	}
@@ -88,7 +98,8 @@ public class ActionListener implements Listener
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
 			return;
-
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+			return;
 		if (data.limited(BehaviorType.breakblock))
 		{
 			event.setCancelled(true);
@@ -105,6 +116,8 @@ public class ActionListener implements Listener
 			return;
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
+			return;
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			return;
 		if (data.limited(BehaviorType.chat))
 		{
@@ -131,6 +144,8 @@ public class ActionListener implements Listener
 		GameData data = GameData.Handler.find(damager);
 		if (data == null)
 			return;
+		if (damager.getGameMode().equals(GameMode.CREATIVE))
+			return;
 		data.decreasePP(cfg.Kill);
 	}
 
@@ -141,6 +156,8 @@ public class ActionListener implements Listener
 			return;
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
+			return;
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			return;
 		if (data.limited(BehaviorType.cmd))
 		{
@@ -159,6 +176,8 @@ public class ActionListener implements Listener
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
 			return;
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+			return;
 		if (data.limited(BehaviorType.dropitem))
 		{
 			event.setCancelled(true);
@@ -175,6 +194,8 @@ public class ActionListener implements Listener
 			return;
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
+			return;
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			return;
 		if (data.limited(BehaviorType.placeblock))
 		{
@@ -193,11 +214,64 @@ public class ActionListener implements Listener
 		GameData data = GameData.Handler.find(event.getPlayer());
 		if (data == null)
 			return;
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+			return;
 		if (data.limited(BehaviorType.sprint))
 		{
 			event.setCancelled(true);
 			event.getPlayer().sendMessage("§c你的体力值不足!无法冲刺!");
 			return;
+		}
+	}
+
+	private Set<UUID> prevPlayersOnGround = Sets.newHashSet();
+
+	@SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+	public void onJump(PlayerMoveEvent e)
+	{
+		if (e.isCancelled())
+			return;
+
+		Player player = e.getPlayer();
+
+		GameData data = GameData.Handler.find(e.getPlayer());
+		if (data == null)
+			return;
+
+		if (player.getGameMode().equals(GameMode.CREATIVE))
+			return;
+
+		if (player.getVelocity().getY() > 0)
+		{
+			double jumpVelocity = (double) 0.42F;
+			if (player.hasPotionEffect(PotionEffectType.JUMP))
+			{
+				PotionEffect eff = null;
+				for (PotionEffect reff : player.getActivePotionEffects())
+				{
+					if (reff.getType().equals(PotionEffectType.JUMP))
+						eff = reff;
+				}
+				jumpVelocity += (double) ((float) (eff.getAmplifier() + 1) * 0.1F);
+			}
+			if (e.getPlayer().getLocation().getBlock().getType() != Material.LADDER && prevPlayersOnGround.contains(player.getUniqueId()))
+			{
+				if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0)
+				{
+					if (data.limited(BehaviorType.jump))
+						player.setVelocity(new Vector(0, -1, 0));
+					else
+						data.decreasePP(cfg.Jump);
+				}
+			}
+		}
+		if (player.isOnGround())
+		{
+			prevPlayersOnGround.add(player.getUniqueId());
+		} else
+		{
+			prevPlayersOnGround.remove(player.getUniqueId());
 		}
 	}
 

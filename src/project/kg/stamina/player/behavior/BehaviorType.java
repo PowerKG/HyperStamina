@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public enum BehaviorType
 {
-	dropitem, cmd, chat, sprint, breakblock, placeblock;
+	dropitem, cmd, chat, sprint, breakblock, placeblock, jump;
 
 	private static HashMap<String, BehaviorType> typeMap = new HashMap<>();
 	static

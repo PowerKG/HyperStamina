@@ -31,7 +31,7 @@ public class CONFIG extends FastConfig
 	public final Double defPlaceBlockValue = 0.2;
 
 	@AutoLoad(path = "ValueConsume.")
-	public final Double Sprint = 0.5, Walk = 0.25, Chat = 0.0, Kill = 0.5, DoCmd = 0.0, DropItem = 0.1;
+	public final Double Sprint = 0.5, Walk = 0.25, Chat = 0.0, Kill = 0.5, DoCmd = 0.0, DropItem = 0.1, Jump = 0.3;
 
 	@AutoLoad
 	public final Double WeakThreshold = 1.0, ExhaustedThreshold = 0.2;
