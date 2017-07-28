@@ -1,6 +1,11 @@
 name: HyperStamina
-version: 1.0
+author: PowerKG
+version: experiment_v1.0
 main: project.kg.STAMINA
 commands:
    PP:
-      description: mainly Commands.
+       description: mainly Commands.
+       usage: /<command> <action>
+permissions:
+   HyperStamina.admin:
+      description: Admin permission that can use admin cmd.
