@@ -58,7 +58,7 @@ ValueConsume:
   #丢物品
   DropItem: 0.1
   #跳跃
-  Jump: 0.1
+  Jump: 0.02
 
 ###################触发设置#######################
 ##################################################
@@ -83,12 +83,13 @@ WeakBuff:
   - slow_digging 1
 
 #精疲力尽阀值。当玩家PP值低于该阀值则触发效果。
-ExhaustedThreshold: 0.5
+ExhaustedThreshold: 0.3
 #精疲力尽后的buff
 ExhaustedBuff: 
+  - :breakblock
+  - :placeblock
+  - :jump
   - :sprint
   - weakness 3
   - slow 3
-  - poison 0
   - slow_digging 10
-

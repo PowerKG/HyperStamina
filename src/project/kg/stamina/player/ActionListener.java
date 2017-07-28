@@ -270,8 +270,10 @@ public class ActionListener implements Listener
 				if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0)
 				{
 					if (data.limited(BehaviorType.jump))
-						player.setVelocity(new Vector(0, -1, 0));
-					else
+					{
+//						player.setVelocity(new Vector(0, -0.1, 0));//完全无法上坡
+						player.setVelocity(new Vector(0,-1,0));//可以上坡
+					} else
 						data.decreasePP(cfg.Jump);
 				}
 			}
