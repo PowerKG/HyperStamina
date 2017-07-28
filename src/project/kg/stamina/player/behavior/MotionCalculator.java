@@ -3,7 +3,7 @@ package project.kg.stamina.player.behavior;
 import java.util.HashMap;
 
 import me.kg.fastclass.Box;
-import project.kg.stamina.CONFIG;
+import project.kg.stamina.set.CONFIG;
 
 public class MotionCalculator
 {

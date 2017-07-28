@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.kg.filedata.DataHandler;
-import project.kg.stamina.CONFIG;
+import project.kg.stamina.set.CONFIG;
 
 public class DataSaver
 {

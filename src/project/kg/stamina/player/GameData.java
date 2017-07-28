@@ -10,22 +10,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import me.kg.filedata.DataHandler;
-import project.kg.stamina.CONFIG;
 import project.kg.stamina.player.behavior.BehaviorType;
 import project.kg.stamina.player.behavior.MotionCalculator;
+import project.kg.stamina.set.CONFIG;
 
 public class GameData
 {
-	private static CONFIG cfg;
+	public static CONFIG cfg;
 	private static DecimalFormat df = new DecimalFormat("#.00");
 
 	private boolean isWeak = false;
 	private boolean isExhausted = false;
-
-	public static void init()
-	{
-		cfg = CONFIG.cfg;
-	}
 
 	protected boolean isSaving = false;
 	public MotionCalculator motionHandler = new MotionCalculator();
@@ -193,7 +188,6 @@ public class GameData
 		return canLimit() && getLimits().contains(type);
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void tick()
 	{
 		double newPP = pp;
@@ -267,7 +261,6 @@ public class GameData
 
 		public static void init(JavaPlugin plugin)
 		{
-			GameData.init();
 			plugin.getServer().getScheduler().runTaskTimer(plugin, updater, 0, 20l);
 			plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, ticker, 0, (long) CONFIG.cfg.Tick);
 		}

@@ -1,4 +1,4 @@
-package project.kg.stamina;
+package project.kg.stamina.set;
 
 import java.util.ArrayList;
 

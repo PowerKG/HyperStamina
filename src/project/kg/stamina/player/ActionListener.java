@@ -31,17 +31,28 @@ import org.bukkit.util.Vector;
 
 import com.google.common.collect.Sets;
 
-import project.kg.stamina.CONFIG;
+import me.kg.fastuse.CTOS;
 import project.kg.stamina.player.behavior.BehaviorType;
 import project.kg.stamina.player.behavior.MotionType;
+import project.kg.stamina.set.CONFIG;
 
 public class ActionListener implements Listener
 {
+	private static ArrayList<UUID> cooldown = new ArrayList<>();
+
 	public static CONFIG cfg;
 
 	public ActionListener()
 	{
-		cfg = CONFIG.cfg;
+		Bukkit.getScheduler().runTaskTimerAsynchronously(CTOS.getPlugin(), new Runnable()
+		{
+
+			@Override
+			public void run()
+			{
+				cooldown.clear();
+			}
+		}, 0, 80L);
 	}
 
 	/**For GameData**/
@@ -103,7 +114,7 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.breakblock))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法破坏方块!");
+			warm(event.getPlayer());
 			return;
 		}
 		data.decreasePP(cfg.defBreakBlockValue);
@@ -122,7 +133,7 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.chat))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法讲话!");
+			warm(event.getPlayer());
 			return;
 		}
 		data.decreasePP(cfg.Chat);
@@ -162,7 +173,7 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.cmd))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法发送命令!");
+			warm(event.getPlayer());
 			return;
 		}
 		data.decreasePP(cfg.DoCmd);
@@ -181,7 +192,7 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.dropitem))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法丢物品!");
+			warm(event.getPlayer());
 			return;
 		}
 		data.decreasePP(cfg.DropItem);
@@ -200,7 +211,7 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.placeblock))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法放置方块!");
+			warm(event.getPlayer());
 			return;
 		}
 		data.decreasePP(cfg.defPlaceBlockValue);
@@ -219,14 +230,13 @@ public class ActionListener implements Listener
 		if (data.limited(BehaviorType.sprint))
 		{
 			event.setCancelled(true);
-			event.getPlayer().sendMessage("§c你的体力值不足!无法冲刺!");
+			warm(event.getPlayer());
 			return;
 		}
 	}
 
 	private Set<UUID> prevPlayersOnGround = Sets.newHashSet();
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
 	public void onJump(PlayerMoveEvent e)
 	{
@@ -275,7 +285,6 @@ public class ActionListener implements Listener
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
 	public void onPlayerMove(PlayerMoveEvent event)
 	{
@@ -300,5 +309,13 @@ public class ActionListener implements Listener
 		else
 			type = MotionType.walk;
 		data.motionHandler.moved(type, dis);
+	}
+
+	private static void warm(Player p)
+	{
+		if (cooldown.contains(p.getUniqueId()))
+			return;
+		p.sendMessage("§c你的体力值不足.");
+		cooldown.add(p.getUniqueId());
 	}
 }
