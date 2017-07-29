@@ -18,7 +18,7 @@ public class STAMINA extends JavaPlugin
 	public static final Permission perAdmin = new Permission("HyperStamina.admin");
 
 	public static final boolean experiment = true;
-	public static final String ver = "v1.0";
+	public static final String ver = "v1.1";
 
 	@Override
 	public void onEnable()

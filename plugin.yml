@@ -1,6 +1,6 @@
 name: HyperStamina
 author: PowerKG
-version: experiment_v1.0
+version: experiment_v1.1
 main: project.kg.STAMINA
 commands:
    PP:
