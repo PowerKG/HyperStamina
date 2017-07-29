@@ -18,7 +18,7 @@ public class GameData
 {
 
 	public static CONFIG cfg;
-	private static DecimalFormat df = new DecimalFormat("#.00");
+	public static DecimalFormat df = new DecimalFormat("#.00");
 
 	private boolean isWeak = false;
 	private boolean isExhausted = false;

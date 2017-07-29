@@ -27,7 +27,12 @@ public class SimplePlaceholderHook implements IPluginHooker
 			if (str.equalsIgnoreCase("now"))
 			{
 				return String.valueOf(data.getPP());
-
+			} else if (str.equalsIgnoreCase("now_f"))
+			{
+				return GameData.df.format(data.getPP());
+			} else if (str.equalsIgnoreCase("now_i"))
+			{
+				return String.valueOf((int) data.getPP());
 			} else if (str.equalsIgnoreCase("max"))
 			{
 				return String.valueOf(data.getMaxPP());
