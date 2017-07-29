@@ -16,6 +16,7 @@ import project.kg.stamina.set.CONFIG;
 
 public class GameData
 {
+
 	public static CONFIG cfg;
 	private static DecimalFormat df = new DecimalFormat("#.00");
 
@@ -102,6 +103,14 @@ public class GameData
 	public double getMaxPP()
 	{
 		return maxPP;
+	}
+
+	public void join()
+	{
+	}
+
+	public void quit()
+	{
 	}
 
 	public void save()
@@ -293,11 +302,16 @@ public class GameData
 			playerMap.put(p, data = DataSaver.loadInto(data));
 			nameMap.put(data.playerName.toLowerCase(), data);
 
+			data.join();
 			data.refreshHook();
 		}
 
 		protected static void remove(Player p)
 		{
+			GameData data = find(p);
+			if (data != null)
+				data.quit();
+
 			if (find(p.getName()) != null)
 				nameMap.remove(p.getName().toLowerCase());
 			if (find(p) != null)

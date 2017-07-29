@@ -298,11 +298,13 @@ public class ActionListener implements Listener
 		if (data == null)
 			return;
 
-		if (!event.getPlayer().isOnGround())
-			return;
-
 		Player p = event.getPlayer();
 
+		if (data.limited(BehaviorType.sprint) && p.isSprinting())
+			p.setSprinting(false);
+
+		if (!event.getPlayer().isOnGround())
+			return;
 		double dis = event.getFrom().distance(event.getTo());
 		if (dis < 0.01)
 			return;
