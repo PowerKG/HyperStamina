@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.kg.fastuse.CTOS;
 import me.kg.filedata.DataHandler;
+import project.kg.hook.Hooks;
 import project.kg.stamina.player.ActionListener;
 import project.kg.stamina.player.DataSaver;
 import project.kg.stamina.player.GameData;
@@ -41,6 +42,9 @@ public class STAMINA extends JavaPlugin
 		CTOS.register(new ActionListener());/*注册事件*/
 
 		DataSaver.init(this);/*数据处理器*/
+
+		Hooks.hookAll(this);/*HOOK*/
+
 		msg("§c加载完毕(" + CTOS.Tick.end() + "ms)");
 	}
 

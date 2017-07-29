@@ -18,6 +18,11 @@ public class DataSaver
 
 	protected static GameData loadInto(GameData data)
 	{
+		for (GameData d : needToSave)
+		{
+			if (d.playerName.toLowerCase().equals(data.playerName.toLowerCase()))
+				return d;
+		}
 		if (DataHandler.exists(data.playerName))
 		{
 			FileConfiguration config = DataHandler.get(data.playerName);

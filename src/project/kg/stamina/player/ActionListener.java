@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -148,7 +149,7 @@ public class ActionListener implements Listener
 			return;
 		if (!(event.getDamager() instanceof Player))
 			return;
-		if (!(((LivingEntity) event.getEntity()).getHealth() - event.getDamage() <= 0))
+		if (!(((Damageable) ((LivingEntity) event.getEntity())).getHealth() - event.getDamage() <= 0))
 			return;
 
 		Player damager = (Player) event.getDamager();
@@ -271,8 +272,8 @@ public class ActionListener implements Listener
 				{
 					if (data.limited(BehaviorType.jump))
 					{
-//						player.setVelocity(new Vector(0, -0.1, 0));//完全无法上坡
-						player.setVelocity(new Vector(0,-1,0));//可以上坡
+						//						player.setVelocity(new Vector(0, -0.1, 0));//完全无法上坡
+						player.setVelocity(new Vector(0, -1, 0));//可以上坡
 					} else
 						data.decreasePP(cfg.Jump);
 				}
